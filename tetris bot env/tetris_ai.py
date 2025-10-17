@@ -2,6 +2,13 @@ from stable_baselines3 import DQN
 from stable_baselines3.common.env_checker import check_env
 from tetris_env import TetrisEnv
 
+# 檢查 GPU 可用性，設定 device
+device = "cuda" if torch.cuda.is_available() else "cpu"
+print("Using device:", device)
+if device == "cuda":
+    # 可選：在固定輸入大小時加速卷積
+    torch.backends.cudnn.benchmark = True
+
 # 建立環境
 env = TetrisEnv(render_mode=None)
 check_env(env)  # ✅ 確認符合 Gym 格式
